@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
 {
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-        public function create(){
-            return view('questionnaire.create');
-        }
+    public function create()
+    {
+        return view('questionnaire.create');
+    }
 
     public function store()
     {
@@ -27,9 +30,10 @@ class QuestionnaireController extends Controller
         return redirect('/questionnaires/'.$questionnaire->id);
     }
 
-    public function show(Questionnaire $questionnaire){
+    public function show(\App\Questionnaire $questionnaire)
+    {
+        $questionnaire->load('questions.answers');
 
-        dd($questionnaire);
         return view('questionnaire.show', compact('questionnaire'));
     }
 }
